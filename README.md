@@ -49,8 +49,8 @@ Authentication: Django's built-in auth system
 
 1. Clone the Repository
 
-git clone https://github.com/yourusername/e_van.git
-cd e_van
+git clone https://github.com/TanishGH/ECOM.git
+cd econ_v2
 
 
 2. Create & Activate Virtual Environment
