@@ -1,0 +1,68 @@
+{% extends 'vendor/base_vendor.html' %}
+
+{% block vendor_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ product.name }}</h1>
+        <div>
+            <a href="{% url 'product:product_update' product.slug %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'product:product_delete' product.slug %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="{{ product.image.url }}" class="img-fluid" style="max-height: 400px;" alt="{{ product.name }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Product Details</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Category</th>
+                            <td>{{ product.category.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price</th>
+                            <td>${{ product.price }}</td>
+                        </tr>
+                        <tr>
+                            <th>Stock</th>
+                            <td>{{ product.stock }}</td>
+                        </tr>
+                        <tr>
+                            <th>Availability</th>
+                            <td>
+                                {% if product.available %}
+                                    <span class="badge bg-success">Available</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Tags</th>
+                            <td>
+                                {% for tag in product.tags_list %}
+                                    <span class="badge bg-info">{{ tag }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

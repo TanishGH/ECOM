@@ -1,0 +1,94 @@
+{% extends 'users/base_admin.html' %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Product Details: {{ product.name }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{% url 'users:product_list' %}" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body text-center">
+                    <h3 class="card-title">{{ product.name }}</h3>
+                    <h4 class="text-primary">${{ product.price }}</h4>
+                    <span class="badge {% if product.available %}bg-success{% else %}bg-secondary{% endif %} mb-3">
+                        {% if product.available %}In Stock{% else %}Out of Stock{% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Product Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Category:</dt>
+                        <dd class="col-sm-9">{{ product.category.name }}</dd>
+
+                        <dt class="col-sm-3">Vendor:</dt>
+                        <dd class="col-sm-9">{{ product.category.vendor.store_name }}</dd>
+
+                        <dt class="col-sm-3">Stock:</dt>
+                        <dd class="col-sm-9">{{ product.stock }} units</dd>
+
+                        <dt class="col-sm-3">Created:</dt>
+                        <dd class="col-sm-9">{{ product.created_at|date:"M d, Y" }}</dd>
+
+                        <dt class="col-sm-3">Last Updated:</dt>
+                        <dd class="col-sm-9">{{ product.updated_at|date:"M d, Y" }}</dd>
+
+                        <dt class="col-sm-3">Tags:</dt>
+                        <dd class="col-sm-9">
+                            {% for tag in product.tags_list %}
+                                <span class="badge bg-info text-dark">{{ tag }}</span>
+                            {% empty %}
+                                No tags
+                            {% endfor %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Product Description -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Description</h5>
+                </div>
+                <div class="card-body">
+                    {{ product.description|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Actions</h5>
+        </div>
+        <div class="card-body">
+            <a href="#" class="btn btn-warning me-2">
+                <i class="fas fa-edit"></i> Edit Product
+            </a>
+            <a href="#" class="btn btn-danger me-2">
+                <i class="fas fa-trash"></i> Delete Product
+            </a>
+            <a href="{% url 'users:product_list' %}?vendor={{ product.category.vendor.id }}" class="btn btn-info">
+                <i class="fas fa-store"></i> View All from This Vendor
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

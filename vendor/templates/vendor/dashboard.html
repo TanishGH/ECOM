@@ -1,0 +1,41 @@
+{% extends 'vendor/base_vendor.html' %}
+
+{% block vendor_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Vendor Dashboard</h1>
+    </div>
+
+    <div class="alert alert-info">
+        <h4>Welcome, {{ vendor.store_name }}!</h4>
+        <p>{{ vendor.store_description }}</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <h2 class="card-text">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <h2 class="card-text">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">Revenue</h5>
+                    <h2 class="card-text">$0.00</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

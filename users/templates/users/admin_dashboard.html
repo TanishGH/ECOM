@@ -1,0 +1,76 @@
+{% extends 'users/base_admin.html' %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Admin Dashboard</h1>
+    </div>
+
+    <div class="alert alert-info">
+        <h4>Welcome, Admin!</h4>
+        <p>You have full control over the platform.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Vendors</h5>
+                    <h2 class="card-text">{{ vendor_count }}</h2>
+                    <a href="{% url 'users:vendor_list' %}" class="text-white">View all</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <h2 class="card-text">{{ product_count }}</h2>
+                    <a href="{% url 'users:product_list' %}" class="text-white">View all</a>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Vendors</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for vendor in recent_vendors %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ vendor.store_name }}
+                            <span class="badge bg-primary rounded-pill">{{ vendor.user.date_joined|date:"M d, Y" }}</span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No recent vendors</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Orders</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for order in recent_orders %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Order #{{ order.id }}
+                            <span class="badge bg-success rounded-pill">${{ order.total_price }}</span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No recent orders</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

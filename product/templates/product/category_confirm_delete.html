@@ -1,0 +1,26 @@
+{% extends 'vendor/base_vendor.html' %}
+
+{% block vendor_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Delete Category</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <p>Are you sure you want to delete "{{ category.name }}"?</p>
+            <p class="text-danger">
+                <i class="fas fa-exclamation-triangle"></i> Warning: This will also delete all products in this category!
+            </p>
+            {% if category.image %}
+                <img src="{{ category.image.url }}" class="img-fluid mb-3" style="max-height: 200px;" alt="{{ category.name }}">
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                <a href="{% url 'product:category_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

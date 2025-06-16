@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Verification Email Sent</h3>
+                </div>
+                <div class="card-body">
+                    <p>We've sent a verification email to your email address. Please check your inbox and click on the verification link to complete your registration.</p>
+                    <p>If you don't receive the email within a few minutes, please check your spam folder.</p>
+                    <a href="{% url 'users:login' %}" class="btn btn-primary">Return to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

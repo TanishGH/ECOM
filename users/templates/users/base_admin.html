@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Admin Sidebar -->
+    <div class="col-md-3 bg-dark text-white sidebar">
+        <div class="position-sticky pt-3">
+            <div class="text-center my-4">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" class="rounded-circle profile-img" alt="Profile">
+                {% else %}
+                    <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto profile-img">
+                        <i class="fas fa-user-shield text-white fa-3x"></i>
+                    </div>
+                {% endif %}
+                <h5 class="mt-3">{{ user.username }}</h5>
+                <span class="badge bg-danger">Admin</span>
+            </div>
+            
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.resolver_match.url_name == 'admin_dashboard' %}active bg-primary{% endif %}" 
+                       href="{% url 'users:admin_dashboard' %}">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'profile' in request.resolver_match.url_name %}active bg-primary{% endif %}" 
+                       href="{% url 'users:edit_profile' %}">
+                        <i class="fas fa-user-edit me-2"></i> Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'vendors/' in request.path %}active bg-primary{% endif %}" 
+                       href="{% url 'users:vendor_list' %}">
+                        <i class="fas fa-store me-2"></i> Vendors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'products/' in request.path %}active bg-primary{% endif %}" 
+                       href="{% url 'users:product_list' %}">
+                        <i class="fas fa-boxes me-2"></i> Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'categories/' in request.path %}active bg-primary{% endif %}" 
+                       href="{% url 'users:category_list' %}">
+                        <i class="fas fa-tags me-2"></i> Categories
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <a class="nav-link text-danger" href="{% url 'users:logout' %}">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 main-content">
+        {% block admin_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

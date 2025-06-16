@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Admin Sidebar -->
+    <div class="col-md-3 bg-dark text-white sidebar">
+        <div class="position-sticky pt-3">
+            <div class="text-center my-4">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" class="rounded-circle profile-img" alt="Profile">
+                {% else %}
+                    <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto profile-img">
+                        <i class="fas fa-user-shield text-white fa-3x"></i>
+                    </div>
+                {% endif %}
+                <h5 class="mt-3">{{ user.username }}</h5>
+                <span class="badge bg-danger">Admin</span>
+            </div>
+            
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.resolver_match.url_name == 'dashboard' %}active bg-primary{% endif %}" 
+                       href="{% url 'admin_dashboard:dashboard' %}">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'vendors' in request.resolver_match.url_name %}active bg-primary{% endif %}" 
+                       href="{% url 'admin_dashboard:vendor_list' %}">
+                        <i class="fas fa-store me-2"></i> Vendors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'products' in request.resolver_match.url_name %}active bg-primary{% endif %}" 
+                       href="{% url 'admin_dashboard:product_list' %}">
+                        <i class="fas fa-boxes me-2"></i> Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if 'categories' in request.resolver_match.url_name %}active bg-primary{% endif %}" 
+                       href="{% url 'admin_dashboard:category_list' %}">
+                        <i class="fas fa-tags me-2"></i> Categories
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 main-content">
+        {% block admin_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

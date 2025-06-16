@@ -1,0 +1,120 @@
+{% extends 'users/base_admin.html' %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Category: {{ category.name }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{% url 'users:category_list' %}" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Category Info -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if category.image %}
+                <img src="{{ category.image.url }}" class="card-img-top" alt="{{ category.name }}">
+                {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height:200px">
+                    <i class="fas fa-tag fa-4x text-muted"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">
+                        <strong>Vendor:</strong> {{ category.vendor.store_name }}<br>
+                        <strong>Products:</strong> {{ category.products.count }}<br>
+                        <strong>Created:</strong> {{ category.created_at|date:"M d, Y" }}<br>
+                        <strong>Updated:</strong> {{ category.updated_at|date:"M d, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Description and Products -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Description</h5>
+                </div>
+                <div class="card-body">
+                    {% if category.description %}
+                        {{ category.description|linebreaks }}
+                    {% else %}
+                        <p class="text-muted">No description provided</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Products in this Category -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Products in this Category</h5>
+                    <span class="badge bg-primary">{{ products.count }} products</span>
+                </div>
+                <div class="card-body">
+                    {% if products %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products|slice:":5" %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ product.image.url }}" width="30" height="30" class="rounded me-2">
+                                        {{ product.name }}
+                                    </td>
+                                    <td>${{ product.price }}</td>
+                                    <td>{{ product.stock }}</td>
+                                    <td>
+                                        <span class="badge {% if product.available %}bg-success{% else %}bg-secondary{% endif %}">
+                                            {% if product.available %}Available{% else %}Unavailable{% endif %}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if products.count > 5 %}
+                        <div class="text-center mt-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">View All Products</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No products in this category yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Actions</h5>
+        </div>
+        <div class="card-body">
+            <a href="#" class="btn btn-warning me-2">
+                <i class="fas fa-edit"></i> Edit Category
+            </a>
+            <a href="#" class="btn btn-danger me-2">
+                <i class="fas fa-trash"></i> Delete Category
+            </a>
+            <a href="{% url 'users:product_list' %}?category={{ category.id }}" class="btn btn-primary">
+                <i class="fas fa-boxes"></i> View All Products
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
